@@ -1,6 +1,6 @@
 EXTRA_DIST = curve_keygen.c 
 
-INCLUDES = -I$(top_srcdir)/include
+AM_CPPFLAGS = -I$(top_srcdir)/include
 
 bin_PROGRAMS = curve_keygen
 
