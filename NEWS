@@ -1,17 +1,35 @@
-0MQ version 4.0.5 stable, released on 2014/
+0MQ version 4.0.6 stable, released on 2015/12/xx
 ================================================
 
-* Fixed #872; lost first part of message over inproc://.
+* Fixed #1273 - V3 protocol handler vulnerable to downgrade attacks.
 
-* Fixed #939, assertion failed: !more (fq.cpp:99) after many ZAP requests.
+* Fixed #1362 - SUB socket sometimes fails to resubscribe properly.
 
-* Fixed #797, keep-alive on Windows.
+* Fixed #1377, #1144 - failed with WSANOTINITIALISED in some cases.
 
-* Fixed #994; bump so library number to 4.0.0
+* Fixed #1389 - PUB, PUSH sockets had slow memory leak.
+
+* Fixed #1382 - zmq_proxy did not terminate if there were no readers.
+
+
+0MQ version 4.0.5 stable, released on 2014/10/14
+================================================
+
+* Fixed #1191; CURVE mechanism does not verify short term nonces.
+
+* Fixed #1190; stream_engine is vulnerable to downgrade attacks.
+
+* Fixed #1088; assertion failure for WSAENOTSOCK on Windows.
 
 * Fixed #1015; race condition while connecting inproc sockets.
 
-* Fixed #1088; assertion failure for WSAENOTSOCK on Windows.
+* Fixed #994; bump so library number to 4.0.0
+
+* Fixed #939, assertion failed: !more (fq.cpp:99) after many ZAP requests.
+
+* Fixed #872; lost first part of message over inproc://.
+
+* Fixed #797, keep-alive on Windows.
 
 
 0MQ version 4.0.4 stable, released on 2014/03/10
