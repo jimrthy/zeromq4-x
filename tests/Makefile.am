@@ -23,6 +23,8 @@ noinst_PROGRAMS = test_system \
                   test_probe_router \
                   test_stream \
                   test_disconnect_inproc \
+                  test_unbind_inproc \
+                  test_unbind_wildcard \
                   test_ctx_options \
                   test_ctx_destroy \
                   test_security_null \
@@ -40,8 +42,10 @@ noinst_PROGRAMS = test_system \
                   test_inproc_connect \
                   test_issue_566 \
                   test_abstract_ipc \
+                  test_proxy_single_socket \
                   test_proxy_terminate \
-                  test_many_sockets
+                  test_many_sockets \
+                  test_stream_empty
 
 if !ON_MINGW
 noinst_PROGRAMS += test_shutdown_stress \
@@ -71,6 +75,8 @@ test_router_raw_empty_SOURCES = test_router_raw_empty.cpp
 test_probe_router_SOURCES = test_probe_router.cpp
 test_stream_SOURCES = test_stream.cpp
 test_disconnect_inproc_SOURCES = test_disconnect_inproc.cpp
+test_unbind_inproc_SOURCES = test_unbind_inproc.cpp
+test_unbind_wildcard_SOURCES = test_unbind_wildcard.cpp
 test_ctx_options_SOURCES = test_ctx_options.cpp
 test_iov_SOURCES = test_iov.cpp
 test_ctx_destroy_SOURCES = test_ctx_destroy.cpp
@@ -89,7 +95,9 @@ test_inproc_connect_SOURCES = test_inproc_connect.cpp
 test_issue_566_SOURCES = test_issue_566.cpp
 test_abstract_ipc_SOURCES = test_abstract_ipc.cpp
 test_many_sockets_SOURCES = test_many_sockets.cpp
+test_proxy_single_socket_SOURCES = test_proxy_single_socket.cpp
 test_proxy_terminate_SOURCES = test_proxy_terminate.cpp
+test_stream_empty_SOURCES = test_stream_empty.cpp
 if !ON_MINGW
 test_shutdown_stress_SOURCES = test_shutdown_stress.cpp
 test_pair_ipc_SOURCES = test_pair_ipc.cpp testutil.hpp

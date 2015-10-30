@@ -93,17 +93,21 @@ int zmq::proxy (
         if (unlikely (rc < 0))
             return -1;
 
+        //  Get the pollout separately because when combining this with pollin it maxes the CPU
+        //  because pollout shall most of the time return directly.
+        //  POLLOUT is only checked when frontend and backend sockets are not the same.
+        if (frontend_ != backend_) {
+            rc = zmq_poll (&itemsout [0], 2, 0);
+            if (unlikely (rc < 0)) {
+                return -1;
+            }
+        }
+
         //  Process a control command if any
         if (control_ && items [2].revents & ZMQ_POLLIN) {
             rc = control_->recv (&msg, 0);
             if (unlikely (rc < 0))
                 return -1;
-
-        //  Get the pollout separately because when combining this with pollin it maxes the CPU
-        //  because pollout shall most of the time return directly
-        rc = zmq_poll (&itemsout [0], 2, 0);
-        if (unlikely (rc < 0))
-            return -1;
 
             moresz = sizeof more;
             rc = control_->getsockopt (ZMQ_RCVMORE, &more, &moresz);
@@ -141,7 +145,7 @@ int zmq::proxy (
         //  Process a request
         if (state == active
         &&  items [0].revents & ZMQ_POLLIN
-        &&  itemsout [1].revents & ZMQ_POLLOUT) {
+        &&  (frontend_ == backend_ || itemsout [1].revents & ZMQ_POLLOUT)) {
             while (true) {
                 rc = frontend_->recv (&msg, 0);
                 if (unlikely (rc < 0))
@@ -174,6 +178,7 @@ int zmq::proxy (
         }
         //  Process a reply
         if (state == active
+        &&  frontend_ != backend_
         &&  items [1].revents & ZMQ_POLLIN
         &&  itemsout [0].revents & ZMQ_POLLOUT) {
             while (true) {
